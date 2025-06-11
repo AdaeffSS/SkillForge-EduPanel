@@ -1,0 +1,19 @@
+button, a.btn
+  padding: 16px
+  border-radius: 12px
+  font-size: 16px
+  cursor: pointer
+  transition: .1s
+  border: 0
+  width: 100%
+
+  &:disabled, &:disabled:hover
+    opacity: .6
+    cursor: not-allowed
+    filter: brightness(100%) !important
+
+  &.primary
+    background: linear-gradient(to left, #B2004D, #B2006B) center
+
+    &:hover
+      filter: brightness(110%)

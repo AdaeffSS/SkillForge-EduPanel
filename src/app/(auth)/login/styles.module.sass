@@ -1,0 +1,143 @@
+.bcg
+  position: absolute
+  inset: auto
+  top: 0
+  width: 100vw
+  height: 100vh
+  object-fit: cover
+  z-index: -1
+  transform: scale(-1, 1)
+
+.main
+  display: flex
+  width: 100vw
+  height: 100vh
+  position: relative
+  background: rgba(0, 0, 0, 0.2)
+  backdrop-filter: blur(70px)
+
+.container, .info
+  position: absolute
+  width: calc(50% - 48px)
+  height: calc(100% - 64px)
+  top: 32px
+
+  .content, .confirm_block
+    height: 100%
+    top: 50%
+    left: 50%
+    translate: -50% -50%
+    position: absolute
+    width: 55%
+    min-width: 400px
+    max-width: 500px
+    display: flex
+    align-items: center
+    justify-content: center
+    text-align: center
+
+    .logo
+      width: 150px
+      height: auto
+
+    h1
+      font-size: 36px
+      margin: 40px 0 24px
+
+    .hello
+      color: rgba(255, 255, 255, 0.8)
+      font-size: 18px
+
+    label
+      display: flex
+      flex-flow: column nowrap
+      width: 100%
+      font-size: 18px
+      gap: 12px
+      margin: 40px 0 24px
+      align-items: start
+
+    .input__wrapper
+      position: relative
+      width: 100%
+
+      .icon
+        position: absolute
+        top: 50%
+        left: 16px
+        transform: translate(0, -50%)
+        width: 20px
+        fill: #A1A1A1
+        stroke: none
+
+
+    input
+      background: #3A3A3A
+      outline: 2px solid #484848
+      border-radius: 12px
+      font-size: 16px
+      width: 100%
+      padding: 16px 16px 16px 48px
+
+    small
+      color: rgba(255, 255, 255, 0.4)
+
+      a
+        text-decoration: underline
+
+    button, :global(a.btn)
+      margin: 40px 0 0
+
+.logo_sk
+  position: absolute
+  width: 150px
+  height: 34px
+  bottom: 20%
+
+  img
+    width: 100%
+    height: 100%
+
+.copyright
+  position: absolute
+  bottom: 0
+  font-size: 14px
+  color: rgba(255, 255, 255, 0.25)
+
+
+
+.container
+  left: 32px
+  background: #191919
+  border-radius: 32px
+  position: relative
+  transition: left 1.2s .2s ease-in-out
+  z-index: 2
+
+  &.confirm
+    left: 25%
+
+.info
+  right: 32px
+  transition: opacity .5s .2s ease-in-out, right 1.2s ease-in-out
+  z-index: 1
+
+  &.confirm
+    opacity: 0
+    right: 25%
+
+.content
+  transition: opacity .4s 1.4s ease-in-out
+
+  &.confirm
+    opacity: 0
+    pointer-events: none
+
+.confirm_block
+  opacity: 0
+  pointer-events: none
+  transition: opacity .4s 1.4s ease-in-out
+
+  &.active
+    opacity: 1
+    pointer-events: auto
