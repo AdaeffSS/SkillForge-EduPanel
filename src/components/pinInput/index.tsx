@@ -116,7 +116,7 @@ const PinCodeInput: React.FC<PinCodeInputProps> = ({
             }
           }}
           maxLength={1}
-          disabled={isValid === true} // Блокировка при успехе
+          readOnly={isValid === true}
           className={`${inputClassName} ${isValid === false ? errorClassName : ""} ${
             isValid === true ? successClassName : ""
           }`}
