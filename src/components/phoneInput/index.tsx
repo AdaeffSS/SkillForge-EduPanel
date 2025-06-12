@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 
 interface PhoneInputProps {
     onPhoneChange: (phone: string, isValid: boolean) => void;
+    className?: any
 }
 
-const PhoneInput: React.FC<PhoneInputProps> = ({ onPhoneChange }) => {
+const PhoneInput: React.FC<PhoneInputProps> = ({ onPhoneChange, className }) => {
     const [phone, setPhone] = useState<string>('');
 
     const formatPhoneNumber = (value: string) => {
@@ -32,6 +33,7 @@ const PhoneInput: React.FC<PhoneInputProps> = ({ onPhoneChange }) => {
                 type="tel"
                 value={phone}
                 onChange={handleChange}
+                className={className}
                 placeholder="+7 (000) 000-00-00"
                 maxLength={18}
             />
