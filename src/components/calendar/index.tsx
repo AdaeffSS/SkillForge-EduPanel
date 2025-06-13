@@ -1,11 +1,32 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
-import getAcademicYearRange from "./utils/academicYearRange";
-import st from "./styles.module.sass";
+import React, {useEffect, useMemo, useRef, useState} from "react";
+import styles from "./styles.module.sass";
 import subjectsConfig from "@/config/subjects.json";
+import {formatDateToString, getAcademicYearRange, generateWeeks} from "./utils/calendarUtils";
 
-const week_days = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
+interface DateRange {
+  start: Date;
+  end: Date;
+}
+interface Subject {
+  type: string;
+  letter: string;
+  color: string;
+}
+interface LessonsData {
+  [date: string]: string[];
+}
+interface ProcessedLessonsData {
+  [date: string]: Subject[];
+}
+interface AcademicYearCalendarTableProps {
+  lessonsData?: LessonsData;
+}
+
+const typedSubjectsConfig: Subject[] = subjectsConfig;
+
+const weekDays = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
 const months = [
   "янв",
   "фев",
@@ -21,159 +42,118 @@ const months = [
   "дек",
 ];
 
-function getDayOfWeek(date: Date) {
-  const jsDay = date.getDay();
-  return jsDay === 0 ? 7 : jsDay;
-}
+const DayCell = React.memo<{
+  day: Date | null;
+  processedLessons: ProcessedLessonsData;
+}>(({ day, processedLessons }) => {
+  if (!day) return <td className={styles.td} />;
 
-function toLocalDateString(date: Date): string {
-  const year = date.getFullYear();
-  const month = (date.getMonth() + 1).toString().padStart(2, "0");
-  const day = date.getDate().toString().padStart(2, "0");
-  return `${year}-${month}-${day}`;
-}
+  const dateString = formatDateToString(day);
+  const isToday = day.toDateString() === new Date().toDateString();
 
-type LessonsData = {
-  [date: string]: string[];
-};
+  return (
+      <td className={styles.td}>
+        <div className={`${styles.box} ${isToday ? styles.today : ""}`}>
+          <div className={styles.date}>
+            <span className={styles.dayNumber}>{day.getDate()}</span>
+            <small className={styles.month}>{months[day.getMonth()]}</small>
+          </div>
+          <ul className={styles.subjects}>
+            {(processedLessons[dateString] ?? []).map((lesson, idx) => (
+                <li
+                    className={styles.subject}
+                    key={idx}
+                    title={lesson.letter}
+                    style={{ "--color": lesson.color } as React.CSSProperties}
+                >
+                  {lesson.letter}
+                </li>
+            ))}
+          </ul>
+        </div>
+      </td>
+  );
+});
 
-type Props = {
-  lessonsData?: LessonsData;
-};
-
-type Subject = {
-  type: string;
-  letter: string;
-  color: string;
-};
-
-type ProcessedLessonsData = {
-  [date: string]: Subject[];
-};
-
-export default function AcademicYearCalendarTable({ lessonsData = {} }: Props) {
-  const [range, setRange] = useState<{ start: Date; end: Date } | null>(null);
-  const [processedLessons, setProcessedLessons] =
-    useState<ProcessedLessonsData>({});
+const AcademicYearCalendarTable: React.FC<AcademicYearCalendarTableProps> = ({
+                                                                               lessonsData = {},
+                                                                             }) => {
+  const [dateRange, setDateRange] = useState<DateRange | null>(null);
+  const [processedLessons, setProcessedLessons] = useState<ProcessedLessonsData>({});
   const containerRef = useRef<HTMLDivElement>(null);
   const tableRef = useRef<HTMLTableElement>(null);
 
   useEffect(() => {
-    setRange(getAcademicYearRange());
+    setDateRange(getAcademicYearRange());
   }, []);
 
-  // Преобразуем lessonsData с учетом subjectsConfig
   useEffect(() => {
-    if (!lessonsData) return;
+    if (!lessonsData || !Object.keys(lessonsData).length) {
+      setProcessedLessons({});
+      return;
+    }
 
     const result: ProcessedLessonsData = {};
-
     for (const date in lessonsData) {
       const types = lessonsData[date];
-      const lessonsForDate = types
-        .map((type) => subjectsConfig.find((subject) => subject.type === type))
-        .filter(Boolean) as Subject[];
-
-      result[date] = lessonsForDate;
+      result[date] = types
+          .map((type) => {
+            const subject = typedSubjectsConfig.find((s) => s.type === type);
+            if (!subject) {
+              console.warn(`Subject with type "${type}" not found in subjectsConfig for date ${date}`);
+              return null;
+            }
+            return subject;
+          })
+          .filter((subject): subject is Subject => subject !== null);
     }
 
     setProcessedLessons(result);
   }, [lessonsData]);
 
-  const days: Date[] = [];
-  let weeks: (Date | null)[][] = [];
-
-  if (range) {
-    const { start, end } = range;
-    for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
-      days.push(new Date(d));
-    }
-
-    const firstDayWeek = getDayOfWeek(start);
-    const emptyCellsCount = firstDayWeek - 1;
-    const cells = [...Array(emptyCellsCount).fill(null), ...days];
-
-    for (let i = 0; i < cells.length; i += 7) {
-      weeks.push(cells.slice(i, i + 7));
-    }
-  }
+  const weeks = useMemo(() => {
+    if (!dateRange) return [];
+    return generateWeeks(dateRange.start, dateRange.end);
+  }, [dateRange]);
 
   useEffect(() => {
-    if (!range || !containerRef.current || !weeks.length || !tableRef.current)
-      return;
+    if (!dateRange || !containerRef.current || !tableRef.current || !weeks.length) return;
 
     const scrollToCurrentWeek = () => {
-      const todayBox = containerRef.current!.querySelector(
-        `.${st.box}.${st.today}`,
-      );
-
+      const todayBox = containerRef.current!.querySelector(`.${styles.box}.${styles.today}`);
       if (todayBox instanceof HTMLElement) {
-        todayBox.scrollIntoView({ block: "start" });
-        tableRef.current!.classList.add(st.active);
+        todayBox.scrollIntoView({ block: "start", behavior: "smooth" });
+        tableRef.current!.classList.add(styles.active);
       }
     };
 
     scrollToCurrentWeek();
-  }, [range, weeks.length]);
+  }, [dateRange]);
 
-  if (!range) return <div className={st.cont} ref={containerRef} />;
+  if (!dateRange) return <div className={styles.cont} ref={containerRef} />;
 
   return (
-    <div className={st.wrapper} ref={containerRef}>
-      <table className={st.table} ref={tableRef}>
-        <thead className={st.thead}>
+      <div className={styles.wrapper} ref={containerRef}>
+        <table className={styles.table} ref={tableRef}>
+          <thead className={styles.thead}>
           <tr>
-            {week_days.map((day) => (
-              <th key={day}>{day}</th>
+            {weekDays.map((day) => (
+                <th key={day}>{day}</th>
             ))}
           </tr>
-        </thead>
-        <tbody className={st.tbody}>
+          </thead>
+          <tbody className={styles.tbody}>
           {weeks.map((week, i) => (
-            <tr key={i}>
-              {week.map((day, idx) => (
-                <td key={idx} className={st.td}>
-                  {day && (
-                    <div
-                      className={
-                        st.box +
-                        (day.toDateString() === new Date().toDateString()
-                          ? ` ${st.today}`
-                          : "")
-                      }
-                    >
-                      <div className={st.date}>
-                        <span className={st.dayNumber}>{day.getDate()}</span>
-                        <small className={st.month}>
-                          {months[day.getMonth()]}
-                        </small>
-                      </div>
-                      <ul className={st.lessons}>
-                        {(processedLessons[toLocalDateString(day)] ?? []).map(
-                          (lesson, idx) => (
-                            <li
-                                className={st.subject}
-                              key={idx}
-                              title={lesson.letter}
-                              style={
-                                {
-                                  "--color": lesson.color,
-                                } as React.CSSProperties
-                              }
-                            >
-                              {lesson.letter}
-                            </li>
-                          ),
-                        )}
-                      </ul>
-                    </div>
-                  )}
-                </td>
-              ))}
-            </tr>
+              <tr key={i}>
+                {week.map((day, idx) => (
+                    <DayCell key={idx} day={day} processedLessons={processedLessons} />
+                ))}
+              </tr>
           ))}
-        </tbody>
-      </table>
-    </div>
+          </tbody>
+        </table>
+      </div>
   );
-}
+};
+
+export default AcademicYearCalendarTable;
