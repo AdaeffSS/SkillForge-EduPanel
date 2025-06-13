@@ -5,6 +5,8 @@
   padding: 0
   margin: 0 auto
   border: none
+  overflow: auto
+  overscroll-behavior: contain
 
 .table
   border-collapse: separate
@@ -22,7 +24,6 @@
   display: table
   width: 100%
   table-layout: fixed
-  position: sticky
   top: 0
   z-index: 2
   th
@@ -32,11 +33,12 @@
 
 .tbody
   display: block
-  max-height: 640px
-  overflow-y: auto
+  height: 650px
+  overflow-y: scroll
   scroll-snap-type: y mandatory
   width: 100%
   padding: -12px
+  overscroll-behavior: contain
 
   tr
     display: table

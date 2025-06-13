@@ -6,6 +6,7 @@ import '@/assets/styles/variables.sass'
 import '@/assets/styles/global.sass'
 import '@/assets/styles/scroll.sass'
 import '@/assets/styles/buttons.sass'
+import '@/assets/styles/containers.sass'
 
 export const metadata: Metadata = {
     title: {
