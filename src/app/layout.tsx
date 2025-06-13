@@ -8,7 +8,11 @@ import '@/assets/styles/scroll.sass'
 import '@/assets/styles/buttons.sass'
 
 export const metadata: Metadata = {
-    title: "SkillForge | Платформа онлайн-обучения",
+    title: {
+        default: 'SkillForge — Платформа онлайн-обучения',
+        template: "%s — SkillForge | Платформа онлайн-обучения"
+    },
+    description: 'Платформа подготовки к государственным экзаменам'
 };
 
 export default function RootLayout({
