@@ -11,7 +11,11 @@ export default function ChildrenLayout({
   return (
     <>
       <Header />
-      <div style={{ padding: 16 } as React.CSSProperties}>{children}</div>
+      <div style={{ display: 'flex', alignItems: 'center', padding: 16 } as React.CSSProperties}>
+          <div style={{ width: '100%' } as React.CSSProperties }>
+              {children}
+          </div>
+      </div>
       <Footer />
     </>
   );

@@ -1,9 +1,9 @@
 .wrapper
   height: 100%
-  width: 100%
+  width: calc(100% + 24px)
   min-width: 900px
   padding: 0
-  margin: 0 auto
+  margin: 0 -12px
   border: none
   overflow: auto
   overscroll-behavior: contain
@@ -15,7 +15,7 @@
   height: 100%
   table-layout: fixed
   opacity: 0
-  transition: opacity 0.5s
+  transition: opacity .5s ease-in-out
 
   &.active
     opacity: 1

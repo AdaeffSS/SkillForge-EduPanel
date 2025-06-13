@@ -69,6 +69,7 @@ const AcademicYearCalendarTable: React.FC<AcademicYearCalendarTableProps> = ({ l
   const [dateRange] = useState<DateRange>(getAcademicYearRange());
   const [processedLessons, setProcessedLessons] = useState<ProcessedLessonsData>({});
   const tbodyRef = useRef<HTMLTableSectionElement>(null);
+  const [isActive, setIsActive] = useState<boolean>(false);
 
   useEffect(() => {
     if (!lessonsData || !Object.keys(lessonsData).length) {
@@ -99,11 +100,12 @@ const AcademicYearCalendarTable: React.FC<AcademicYearCalendarTableProps> = ({ l
     const offset = todayTop - tbodyTop + tbody.scrollTop;
 
     tbody.scrollTo({ top: offset, behavior: "smooth" });
+    setIsActive(true);
   }, [weeks]);
 
   return (
       <div className={styles.wrapper}>
-        <table className={`${styles.table} ${styles.active}`}>
+        <table className={`${styles.table} ${isActive && styles.active}`}>
           <thead className={styles.thead}>
           <tr>{weekDays.map((day) => <th key={day}>{day}</th>)}</tr>
           </thead>
