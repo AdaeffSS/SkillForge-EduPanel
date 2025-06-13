@@ -1,5 +1,6 @@
 import Header from '@/components/header'
 import Footer from "@/components/footer";
+import Calendar from "@/components/calendar";
 
 const page = () => {
   return (

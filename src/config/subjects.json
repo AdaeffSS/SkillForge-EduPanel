@@ -1,0 +1,17 @@
+[
+  {
+    "type": "info",
+    "color": "#41C3FF",
+    "letter": "И"
+  },
+  {
+    "type": "rus",
+    "color": "#5EFFC9",
+    "letter": "Р"
+  },
+  {
+    "type": "math",
+    "color": "#FF8450",
+    "letter": "М"
+  }
+]
