@@ -4,6 +4,7 @@ import Calendar from "@/components/calendar";
 import LineStat from "@/components/stats/line";
 import { Metadata } from "next";
 import st from "./st.module.sass";
+import StatBlock from "../../components/stats/mainStatBlock";
 
 export const metadata: Metadata = {
   title: "Главная",
@@ -262,9 +263,14 @@ const testStat = [
 const page = () => {
   return (
     <div className={st.container}>
-      <div className={st.column}>
-        <div className="cont">
+      <div className={`${st.column__stat} ${st.column}`}>
+        <div className={`${st.stat} cont`}>
           <h1>Статистика</h1>
+          <div className={st.stat__block}>
+            <StatBlock data={testStat[1]} />
+            <StatBlock data={testStat[2]} />
+            <StatBlock data={testStat[3]} />
+          </div>
         </div>
       </div>
       <div className={st.column}>
@@ -273,7 +279,7 @@ const page = () => {
         </div>
         <div className="cont">
           <h1>Расписание</h1>
-          <div className={st.calendar__wrapper}>
+          <div className={st.calendar}>
             <Calendar lessonsData={testData} />
           </div>
         </div>
