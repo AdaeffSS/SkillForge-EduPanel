@@ -1,0 +1,34 @@
+.wrapper
+  --plyr-color-main: linear-gradient(135deg, #B2004D, #B2006B)
+  border-radius: 12px
+  overflow: hidden
+  background-color: black
+  aspect-ratio: 16/9
+  width: 100%
+  height: auto
+  position: relative
+
+  :global(.plyr)
+    height: 100%
+    width: 100%
+    display: flex
+    flex: 1
+
+  &:before
+    width: 100%
+    height: 100%
+    content: ""
+    position: absolute
+    top: 0
+    left: 0
+    background: rgb(0, 0, 0)
+    z-index: 1
+    transition: opacity .2s .08s ease-in-out
+    pointer-events: none
+
+  &.active:before
+    opacity: 0
+
+
+  *
+    font-size: inherit
