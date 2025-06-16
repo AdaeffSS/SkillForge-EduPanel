@@ -13,7 +13,7 @@ interface PlyrPlayerProps {
     points?: MarkersPoints[]
 }
 
-const PlyrPlayer: React.FC<PlyrPlayerProps> = ({ src, points,poster, className = '' }) => {
+const PlyrPlayer: React.FC<PlyrPlayerProps> = ({ src, points, poster, className = '' }) => {
     const videoRef = useRef<HTMLVideoElement>(null);
     const playerRef = useRef<any>(null);
     const [isReady, setIsReady] = useState(false);
@@ -27,7 +27,6 @@ const PlyrPlayer: React.FC<PlyrPlayerProps> = ({ src, points,poster, className =
             if (!video) return;
 
             playerRef.current = new Plyr(video, {
-                debug: true,
                 keyboard: {
                     focused: true,
                     global: true
@@ -111,7 +110,8 @@ const PlyrPlayer: React.FC<PlyrPlayerProps> = ({ src, points,poster, className =
             <video
                 ref={videoRef}
                 className="plyr-react plyr"
-                poster={poster}
+                data-poster={poster}
+                preload="none"
             />
         </div>
     );

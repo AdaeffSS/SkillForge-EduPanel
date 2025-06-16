@@ -130,7 +130,7 @@ const page = () => {
         <div className={`${st.left_col} ${st.column}`}>
           <div className={`${st.cont} ${st.player__container}`}>
             <div className={st.player}>
-              <Player src={data.video.playlist} points={data.video.timecodes} />
+              <Player src={data.video.playlist} poster={data.video.poster} points={data.video.timecodes} />
             </div>
             <h1>{data.name}</h1>
             <small className={st.lesson_text}>Урок курса {data.course}</small>
