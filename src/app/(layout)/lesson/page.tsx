@@ -8,6 +8,7 @@ import ReactMarkdown from "react-markdown";
 import "katex/dist/katex.min.css";
 import PDF from "@/assets/images/pfd";
 import React from "react";
+import Lesson from "@/components/lesson";
 
 const data = {
   lesson_id: 1,
@@ -224,26 +225,7 @@ const page = () => {
             <h2>Твои занятия на сегодня по информатике</h2>
             <ul className={st.list}>
               {personal_data.your_lessons.map((item, i) => (
-                <li className={`${data.lesson_id == item.lesson_id ? st.this : ''} ${st.item}`} key={i}>
-                  <div className={st.left}>
-                    <span className={st.name}>
-                      <span className={st.type} style={{ color: item.type == 'theory' ? '#00DDFF' : item.type == 'practice' ? '#D400FF' : '#fff'} as React.CSSProperties}>{item.type == 'theory' ? 'Теория' : item.type == 'practice' ? 'Практика' : 'Занятие'}:</span>
-                      {' '}{item.name}
-                    </span>
-                    <div className={st.bottom}>
-                      <span>
-                        Время выполнения: <span>{String(item.time)} минут</span>
-                      </span>
-                      <span>
-                        Сложность: <span>{String(item.difficulty)}</span>
-                      </span>
-                      <span>
-                        XP: <span>{String(item.XP)}</span>
-                      </span>
-                    </div>
-                  </div>
-                  <CircleCheck size={32} color={item.isOver ? '#fff' : 'rgba(255,255,255,0.4)'} />
-                </li>
+                <li key={i}><Lesson bcg={'#303030'} item={item} currentLessonId={data.lesson_id}/></li>
               ))}
             </ul>
             <button className="btn primary">Далее</button>

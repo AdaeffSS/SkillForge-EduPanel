@@ -1,10 +1,10 @@
-import Header from "@/components/header";
-import Footer from "@/components/footer";
 import Calendar from "@/components/calendar";
-import LineStat from "@/components/stats/line";
 import { Metadata } from "next";
 import st from "./st.module.sass";
 import StatBlock from "../../components/stats/mainStatBlock";
+import Lesson from "@/components/lesson";
+import subConf from "@/config/subjects.json";
+import React from "react";
 
 export const metadata: Metadata = {
   title: "Главная",
@@ -260,12 +260,81 @@ const testStat = [
   },
 ];
 
+const plan = [
+  {
+    subject: "info",
+    type: "oge",
+    lessons: [
+      {
+        type: "theory",
+        name: "Задание № 1 (сопоставление графических и табличных данных)",
+        time: 26,
+        difficulty: 2,
+        XP: 31,
+        lesson_id: 0,
+        isOver: true,
+      },
+      {
+        type: "theory",
+        name: "Задание № 1 (сопоставление графических и табличных данных)",
+        time: 26,
+        difficulty: 2,
+        XP: 31,
+        lesson_id: 1,
+        isOver: false,
+      },
+      {
+        type: "practice",
+        name: "Задание № 1 (сопоставление графических и табличных данных)",
+        time: 26,
+        difficulty: 2,
+        XP: 31,
+        lesson_id: 2,
+        isOver: false,
+      },
+    ],
+  },
+  {
+    subject: "rus",
+    type: "oge",
+    lessons: [
+      {
+        type: "theory",
+        name: "Задание № 1 (сопоставление графических и табличных данных)",
+        time: 26,
+        difficulty: 2,
+        XP: 31,
+        lesson_id: 0,
+        isOver: true,
+      },
+      {
+        type: "theory",
+        name: "Задание № 1 (сопоставление графических и табличных данных)",
+        time: 26,
+        difficulty: 2,
+        XP: 31,
+        lesson_id: 1,
+        isOver: false,
+      },
+      {
+        type: "practice",
+        name: "Задание № 1 (сопоставление графических и табличных данных)",
+        time: 26,
+        difficulty: 2,
+        XP: 31,
+        lesson_id: 2,
+        isOver: false,
+      },
+    ],
+  },
+];
+
 const page = () => {
   return (
     <div className={st.container}>
       <div className={`${st.column__stat} ${st.column}`}>
         <div className={`${st.stat} cont`}>
-          <h1>Статистика</h1>
+          <h2>Статистика</h2>
           <div className={st.stat__block}>
             <StatBlock data={testStat[1]} />
             <StatBlock data={testStat[2]} />
@@ -275,10 +344,38 @@ const page = () => {
       </div>
       <div className={st.column}>
         <div className="cont">
-          <h1>План на сегодня</h1>
+          <h2>План на сегодня</h2>
+          <div className={st.subjects}>
+            {plan.map((lesson, i) => {
+              const subject = subConf.find(
+                (item) => item.type === lesson.subject,
+              ) || { name: "", color: "", letter: "", type: "" };
+              return (
+                <div className={st.subj} key={i}>
+                  <h3 style={{ "--color": subject?.color } as React.CSSProperties} className={st.h3}>
+                    <span className={st.type}>
+                      {lesson.type == "oge"
+                        ? "ОГЭ"
+                        : lesson.type == "ege"
+                          ? "ЕГЭ"
+                          : "ЭКЗ"}
+                    </span>{" "}
+                    <span className={st.subject}>{subject?.name}</span>
+                  </h3>
+                  <ul className={st.plan}>
+                    {lesson.lessons.map((item, i) => (
+                      <li key={i}>
+                        <Lesson bcg={'#272727'} item={item} />
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              );
+            })}
+          </div>
         </div>
         <div className="cont">
-          <h1>Расписание</h1>
+          <h2>Расписание</h2>
           <div className={st.calendar}>
             <Calendar lessonsData={testData} />
           </div>
