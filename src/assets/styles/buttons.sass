@@ -6,6 +6,10 @@
   transition: .1s
   border: 0
   width: 100%
+  display: flex
+  align-items: center
+  justify-content: center
+  font-weight: 500
 
   &:disabled, &:disabled:hover
     opacity: .6
@@ -14,6 +18,12 @@
 
   &.primary
     background: linear-gradient(to left, #B2004D, #B2006B) center
+
+    &:hover
+      filter: brightness(110%)
+
+  &.secondary
+    background: #1C1C1C
 
     &:hover
       filter: brightness(110%)

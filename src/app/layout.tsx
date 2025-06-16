@@ -6,9 +6,14 @@ import '@/assets/styles/variables.sass'
 import '@/assets/styles/global.sass'
 import '@/assets/styles/scroll.sass'
 import '@/assets/styles/buttons.sass'
+import '@/assets/styles/containers.sass'
 
 export const metadata: Metadata = {
-    title: "SkillForge | Платформа онлайн-обучения",
+    title: {
+        default: 'SkillForge — Платформа онлайн-обучения',
+        template: "%s — SkillForge | Платформа онлайн-обучения"
+    },
+    description: 'Платформа подготовки к государственным экзаменам'
 };
 
 export default function RootLayout({

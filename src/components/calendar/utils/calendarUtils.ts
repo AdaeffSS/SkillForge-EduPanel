@@ -1,37 +1,39 @@
-export const getAcademicYearRange = () => {
-    const now = new Date()
-    const year = now.getFullYear()
+const cachedAcademicYearRange = (() => {
+    const now = new Date();
+    const year = now.getFullYear();
 
-    const septThisYear = new Date(year, 8, 1)
-    const septLastYear = new Date(year - 1, 8, 1)
+    const septThisYear = new Date(year, 8, 1);
+    const septLastYear = new Date(year - 1, 8, 1);
+    const juneMidThisYear = new Date(year, 7, 15);
+    const juneMidNextYear = new Date(year + 1, 7, 15);
 
-    const juneMidThisYear = new Date(year, 7, 15)
-    const juneMidNextYear = new Date(year + 1, 7, 15)
+    const academicYearStart = now >= septThisYear ? septThisYear : septLastYear;
+    const juneMid = now <= juneMidThisYear ? juneMidThisYear : juneMidNextYear;
 
-    const academicYearStart = now >= septThisYear ? septThisYear : septLastYear
-    const juneMid = now <= juneMidThisYear ? juneMidThisYear : juneMidNextYear
-
-    function getMonday(date: Date) {
-        const d = new Date(date)
-        const day = d.getDay() || 7
+    const getMonday = (date: Date): Date => {
+        const d = new Date(date);
+        const day = d.getDay() || 7;
         if (day !== 1) {
-            d.setDate(d.getDate() - (day - 1))
+            d.setDate(d.getDate() - (day - 1));
         }
-        return d
-    }
-    function getSunday(date: Date) {
+        return d;
+    };
+
+    const getSunday = (date: Date): Date => {
         const d = new Date(date);
         const day = d.getDay();
-        const diff = day === 0 ? 0 : day;
-        d.setDate(d.getDate() - diff);
+        const diff = day === 0 ? 7 : 7 - day; // Перемещаем к следующему воскресенью
+        d.setDate(d.getDate() + diff);
         return d;
-    }
+    };
 
-    const startMonday = getMonday(academicYearStart)
-    const endMonday = getSunday(juneMid)
+    return {
+        start: getMonday(academicYearStart),
+        end: getSunday(juneMid),
+    };
+})();
 
-    return { start: startMonday, end: endMonday }
-}
+export const getAcademicYearRange = () => cachedAcademicYearRange;
 
 export const getDayOfWeek = (date: Date): number => {
     const jsDay = date.getDay();
@@ -47,8 +49,10 @@ export const formatDateToString = (date: Date): string => {
 
 export const generateWeeks = (start: Date, end: Date): (Date | null)[][] => {
     const days: Date[] = [];
-    for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
-        days.push(new Date(d));
+    let current = new Date(start);
+    while (current <= end) {
+        days.push(new Date(current));
+        current = new Date(current.setDate(current.getDate() + 1));
     }
 
     const firstDayWeek = getDayOfWeek(start);

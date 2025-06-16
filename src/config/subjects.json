@@ -1,17 +1,20 @@
 [
   {
     "type": "info",
-    "color": "#41C3FF",
-    "letter": "И"
+    "color": "#FF0099",
+    "letter": "И",
+    "name": "Информатика"
   },
   {
     "type": "rus",
-    "color": "#5EFFC9",
-    "letter": "Р"
+    "color": "#00FFAA",
+    "letter": "Р",
+    "name": "Русский язык"
   },
   {
     "type": "math",
-    "color": "#FF8450",
-    "letter": "М"
+    "color": "#F1662A",
+    "letter": "М",
+    "name": "Математика"
   }
 ]

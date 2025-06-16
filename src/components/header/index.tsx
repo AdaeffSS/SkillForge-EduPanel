@@ -42,12 +42,12 @@ const Header = () => {
           <ul className={st.ul}>
             {nav.map((item, i) => (
               <li key={i}>
-                <a
+                <Link
                   style={{ "--color": item.color } as React.CSSProperties}
                   href={item.href}
                 >
                   {item.icon} {item.label}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
