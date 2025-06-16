@@ -12,7 +12,7 @@ import React from "react";
 const data = {
   lesson_id: 1,
   video: {
-    playlist: "https://storage.yandexcloud.net/hls-test-adaeff/1920.m3u8",
+    playlist: "https://storage.yandexcloud.net/hls-test-adaeff/master.m3u8",
     poster:
       "https://pic.rutubelist.ru/video/2024-12-03/be/7d/be7d3d890dba06f2004336cbf6668f0d.jpg",
     timecodes: [
