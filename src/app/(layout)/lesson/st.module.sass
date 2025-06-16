@@ -12,17 +12,221 @@
   .cont
     background-color: #272727
     border-radius: 12px
-    padding: 10px
+    padding: 16px 24px 24px
 
   h1, h2
     font-weight: 500
     font-size: 24px
 
-.bottom
-  display: grid
-  width: 100%
-  gap: 10px
-  grid-template-columns: 60% auto
+.left_col
+
+  .bottom
+    display: grid
+    width: 100%
+    gap: 10px
+    grid-template-columns: 60% auto
 
 .player
   width: 100%
+  margin: 0 0 16px
+
+.lesson
+  &_text
+    font-weight: 500
+    font-size: 16px
+    color: rgba(255, 255, 255, 0.6)
+    margin: 4px 0 16px
+
+  &_table
+    flex-flow: row
+    justify-content: space-between
+    gap: 32px
+
+    .left
+      background: rgba(255, 255, 255, 0.04)
+      outline: 1px solid rgba(255, 255, 255, 0.25)
+      border-radius: 12px
+      padding: 16px 32px
+      height: fit-content
+
+    .right
+      flex-flow: row nowrap
+      gap: 16px
+
+      .btn
+        padding: 8px 32px
+
+    .like_block
+      flex-flow: row nowrap
+      gap: 1px
+
+.like, .dislike
+  display: flex
+  flex-flow: row nowrap
+  align-items: center
+  justify-content: center
+  gap: 6px
+  width: max-content
+  padding: 12px
+  background-color: #1C1C1C
+  border-radius: 12px 0 0 12px
+  color: rgba(255, 255, 255, 0.6)
+  font-size: 16px
+  transition: .15s
+  cursor: pointer
+
+  &:hover
+    filter: brightness(.8)
+    color: rgba(255, 255, 255, 1)
+
+.dislike
+  aspect-ratio: 1
+  border-radius: 0 12px 12px 0
+
+.timecodes__block
+  display: flex
+  gap: 4px
+  margin-top: 12px
+
+.timecode_btn
+  background-color: #1C1C1C
+  padding: 2px 16px 2px 2px
+  border-radius: 12px
+  display: flex
+  flex-flow: row nowrap
+  align-items: center
+  gap: 12px
+  width: 100%
+  text-align: left
+  white-space: nowrap
+  transition: .1s
+  cursor: pointer
+
+  &:hover
+    background-color: #141414
+
+  span
+    height: 100%
+    display: flex
+    padding: 8px 12px
+    min-width: 84px
+    align-items: center
+    justify-content: center
+    background: rgba(255, 255, 255, 0.1)
+    border-radius: 12px
+
+
+
+//////////////////////////////////
+
+
+
+.materials
+
+  &__block
+    display: flex
+    gap: 12px
+
+  &__item
+    display: flex
+    background: rgba(255, 255, 255, 0.05)
+    justify-content: space-between
+    padding: 16px
+    max-height: 70px
+    border-radius: 12px
+    align-items: center
+    gap: 12px
+    cursor: pointer
+    transition: .1s
+
+    &:hover
+      background: rgba(255, 255, 255, 0.08)
+
+    .icon
+      height: 48px
+
+    .btn
+      width: fit-content
+      padding-left: 24px
+      padding-right: 24px
+
+    div
+      width: 100%
+      white-space: wrap
+
+      small
+        color: rgba(255, 255, 255, 0.6)
+
+
+  h2
+    margin-bottom: 12px
+
+
+.practice
+
+  h2
+    margin-bottom: 12px
+
+  .message
+    flex-flow: row nowrap
+    align-items: center
+    padding: 16px 16px 16px 32px
+    background: var(--color)
+    border-radius: 12px
+    margin-bottom: 12px
+    gap: 32px
+    font-size: 18px
+    color: rgba(255, 255, 255, 0.9)
+
+    &.ok
+      --color: #18643b
+    &.no
+      --color: #642c18
+
+    .icon
+      min-width: 54px
+
+  .grid
+    display: grid
+    grid-template-areas: 'A B' 'C D' 'E E'
+    gap: 8px
+
+    button:last-child
+      grid-area: E
+
+
+.today
+
+  h2
+    margin-bottom: 12px
+
+  .list
+    gap: 8px
+    margin-bottom: 16px
+
+  .item
+    gap: 12px
+    display: flex
+    justify-content: space-between
+    align-items: center
+    flex-flow: row nowrap
+    background: rgba(255, 255, 255, 0.05)
+    border-radius: 12px
+    padding: 16px
+
+    .left
+      flex: 1
+
+  .name
+    font-weight: 500
+
+  .bottom
+    margin-top: 6px
+    font-weight: 400
+    color: rgba(255, 255, 255, 0.8)
+    flex-flow: row nowrap
+    gap: 32px
+
+  .this
+    background: rgba(255, 255, 255, 0.1)
+    outline: 2px solid rgba(255, 255, 255, 0.5)
