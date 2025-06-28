@@ -51,7 +51,7 @@ const PhoneStep = ({
         <Link href="#">условиями пользования</Link>
       </small>
       <button
-        type="button"
+        type="submit"
         disabled={!isPhoneValid || step === "confirm"}
         onClick={handleClick}
         className="btn primary"

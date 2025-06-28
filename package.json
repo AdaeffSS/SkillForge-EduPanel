@@ -9,7 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^2.8.2",
     "@types/react-plyr": "^2.1.4",
+    "axios": "^1.10.0",
     "hls.js": "^1.6.5",
     "katex": "^0.16.22",
     "lucide-react": "^0.514.0",
@@ -22,6 +24,7 @@
     "react-dom": "^19.0.0",
     "react-input-mask": "^2.0.4",
     "react-markdown": "^10.1.0",
+    "react-redux": "^9.2.0",
     "react-window": "^1.8.11",
     "rehype-katex": "^7.0.1",
     "remark-math": "^6.0.0",
