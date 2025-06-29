@@ -7,7 +7,7 @@ import PhoneStep from "./components/phoneStep";
 import ConfirmStep from "./components/confirmStep";
 import LoginInfo from "./components/LoginInfo";
 import api from "@/assets/lib/api";
-import { isAxiosError } from "axios";
+import axios, { isAxiosError } from "axios";
 
 const LoginPage: React.FC = () => {
   // Шаг текущего состояния: "init" - ввод телефона, "confirm" - ввод кода
@@ -29,49 +29,40 @@ const LoginPage: React.FC = () => {
   const phoneFormRef = useRef<HTMLFormElement>(null);
   const pinInputRef = useRef<HTMLInputElement>(null);
 
-  // При монтировании компонента — проверяем флаг accessRefresh=1 в URL
   useEffect(() => {
     console.log("[login] trying to refresh…");
     const url = new URL(window.location.href);
     const accessRefresh = url.searchParams.get("accessRefresh");
-    const redirectPath = url.searchParams.get("redirect"); // получаем redirect
-
-    console.log("accessRefresh param:", accessRefresh);
-    console.log("redirect param:", redirectPath);
+    const redirectPath = url.searchParams.get("redirect")
 
     if (accessRefresh === "1") {
       api.post("/auth/refresh")
           .then(() => {
             if (redirectPath) {
-              // Редирект на переданный путь
               window.location.href = redirectPath;
             } else {
-              // Если redirect не передан — по умолчанию на главную
               window.location.href = "/";
             }
           })
           .catch((err) => {
             console.warn("[login] refresh failed on accessRefresh=1", err);
-            // Можно добавить обработку ошибки, например, показать уведомление
           });
     }
   }, []);
 
-  // Обработчик изменения номера телефона
+
   const handlePhoneChange = (value: string, valid: boolean): void => {
     setPhone(value);
     setIsPhoneValid(valid);
   };
 
-  // Обработчик изменения PIN-кода
   const handlePinChange = (updatedPin: string[]): void => {
     setPinCode(updatedPin);
   };
 
-  // Обработчик завершения ввода PIN-кода — отправка кода на сервер
   const handlePinComplete = async (enteredPin: string): Promise<void> => {
     try {
-      const response = await api.post(`/auth/verify-otp`, {
+      const response = await axios.post(`http://localhost:4000/api/v1/auth/verify-otp`, {
         phone,
         code: String(enteredPin),
       });
@@ -99,7 +90,7 @@ const LoginPage: React.FC = () => {
   const submitForm = async (): Promise<void> => {
     if (isPhoneValid && currentStep === "init") {
       try {
-        await api.post(`/auth/send-otp`, { phone });
+        await axios.post(`http://localhost:4000/api/v1/auth/send-otp`, { phone });
         goToConfirmStep();
       } catch (error) {
         if (isAxiosError(error)) {

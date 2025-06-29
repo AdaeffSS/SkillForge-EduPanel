@@ -7,8 +7,8 @@ import React from "react";
 
 const nav = [
     {'label': 'Главная', 'href': '/', icon: <House className={st.icon} />, color: '#FF0099'},
-    {'label': 'Уроки', 'href': '/lessons', icon: <GalleryVerticalEnd className={st.icon} />, color: '#00FF99'},
-    {'label': 'Задачи', 'href': '/tasks', icon: <TableProperties className={st.icon} />, color: '#00BFFF'},
+    {'label': 'Урок', 'href': '/lesson', icon: <GalleryVerticalEnd className={st.icon} />, color: '#00FF99'},
+    {'label': 'Решение задач', 'href': '/tasks', icon: <TableProperties className={st.icon} />, color: '#00BFFF'},
 ]
 
 const user = {
