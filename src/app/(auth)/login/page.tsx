@@ -10,22 +10,12 @@ import api from "@/assets/lib/api";
 import axios, { isAxiosError } from "axios";
 
 const LoginPage: React.FC = () => {
-  // Шаг текущего состояния: "init" - ввод телефона, "confirm" - ввод кода
   const [currentStep, setCurrentStep] = useState<"init" | "confirm">("init");
-
-  // Валидация телефона
   const [isPhoneValid, setIsPhoneValid] = useState(false);
-
-  // Хранение номера телефона
   const [phone, setPhone] = useState<string | null>(null);
-
-  // Массив для PIN-кода (4 символа)
   const [pinCode, setPinCode] = useState(["", "", "", ""]);
-
-  // Статус корректности введённого PIN (true, false или undefined — ещё не проверено)
   const [isPinCorrect, setIsPinCorrect] = useState<boolean | undefined>(undefined);
 
-  // Ссылки на элементы формы для фокуса и прочего
   const phoneFormRef = useRef<HTMLFormElement>(null);
   const pinInputRef = useRef<HTMLInputElement>(null);
 
@@ -36,7 +26,9 @@ const LoginPage: React.FC = () => {
     const redirectPath = url.searchParams.get("redirect")
 
     if (accessRefresh === "1") {
-      api.post("/auth/refresh")
+      api.post("/auth/refresh", {
+        withCredentials: true,
+      })
           .then(() => {
             if (redirectPath) {
               window.location.href = redirectPath;
@@ -65,6 +57,8 @@ const LoginPage: React.FC = () => {
       const response = await axios.post(`http://localhost:4000/api/v1/auth/verify-otp`, {
         phone,
         code: String(enteredPin),
+      }, {
+        withCredentials: true,
       });
 
       if (response.status === 200) {
