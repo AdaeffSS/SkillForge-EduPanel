@@ -22,7 +22,11 @@ const Markdown = ({ children }: { children: string }) => {
       components={{
         br: () => <span className={st.br} />,
         table({ children }) {
-          return <table className={st.table}>{children}</table>;
+          return (
+            <div className={st.table__wrapper}>
+              <table className={st.table}>{children}</table>
+            </div>
+          );
         },
         thead({ children }) {
           return <thead className={st.thead}>{children}</thead>;

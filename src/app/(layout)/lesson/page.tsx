@@ -9,6 +9,7 @@ import "katex/dist/katex.min.css";
 import PDF from "@/assets/images/pfd";
 import React from "react";
 import Lesson from "@/components/lesson";
+import Markdown from "@/components/markdown";
 
 const data = {
   lesson_id: 1,
@@ -162,7 +163,7 @@ const page = () => {
           <div className={st.bottom}>
             <div className={`${st.cont} ${st.description}`}>
               <h2 style={{ margin: "0 0 12px" }}>Описание</h2>
-              <ReactMarkdown>{data.description}</ReactMarkdown>
+              <Markdown>{data.description}</Markdown>
             </div>
             <div className={`${st.cont} ${st.timecodes}`}>
               <h2>Таймкоды</h2>
