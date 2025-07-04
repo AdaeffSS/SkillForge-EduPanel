@@ -1,0 +1,97 @@
+.task
+  background: rgba(255, 255, 255, 0.1)
+  border-radius: 12px
+  gap: 12px
+  overflow: hidden
+
+.header
+  background: hsl(var(--color), 100%, 10%)
+  flex-flow: row
+  align-items: center
+  justify-content: space-between
+  gap: 32px
+  min-height: 46px
+  border-radius: 12px
+  margin: 6px 6px 0
+
+  *
+    white-space: nowrap
+
+  .text
+    color: rgba(255, 255, 255, 0.6)
+    font-size: 17px
+
+  .type
+    color: white
+
+.left
+  flex-flow: row nowrap
+  white-space: nowrap
+  height: 100%
+  align-items: center
+  gap: 16px
+
+.number
+  background: hsl(var(--color), 90%, 30%)
+  width: fit-content
+  min-width: 52px
+  display: flex
+  align-items: center
+  justify-content: center
+  font-weight: 600
+  font-size: 24px
+  border-radius: 8px
+  margin: 4px
+  height: calc(100% - 8px)
+
+.right
+  font-size: 12px
+  color: rgba(255, 255, 255, 0.2)
+  font-weight: 400
+  margin-right: 16px
+
+.content
+  padding: 0 16px
+  font-size: 16px
+
+.buttons
+  flex-flow: row nowrap
+  gap: 8px
+  width: fit-content
+
+.btn
+  max-width: 120px
+  height: 40px
+  font-size: 14px
+  font-weight: 400
+
+.bottom
+  flex-flow: row nowrap
+  justify-content: space-between
+  padding: 0 16px 12px
+
+.input
+  background: #262626
+  font-size: 18px
+  border-radius: 12px 0 0 12px
+  border: 2px solid #1C1C1C
+  outline: none
+  padding: 0 16px
+  transition: .1s
+
+  &:hover
+    filter: brightness(110%)
+
+  &__container
+    flex-flow: row-reverse nowrap
+
+    .btn
+      border-radius: 0 12px 12px 0
+
+      &:hover + .input
+        filter: brightness(110%)
+
+  &__wrapper
+    display: flex
+    align-items: center
+    gap: 12px

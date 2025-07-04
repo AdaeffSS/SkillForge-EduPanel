@@ -1,0 +1,50 @@
+.task
+  padding: 10px
+  min-height: 120px
+  justify-content: space-between
+  cursor: pointer
+  position: relative
+  z-index: 1
+  border-radius: 12px
+
+  &:hover:before
+    scale: 1.05 1.1
+    background: hsl(var(--color), 55%, 30%)
+
+  &:before
+    position: absolute
+    background: hsl(var(--color), 30%, 20%)
+    content: ''
+    inset: 0
+    z-index: -1
+    border-radius: 12px
+    scale: 1
+    transition: .17s
+
+.raw
+  flex-flow: row nowrap
+  justify-content: space-between
+  align-items: start
+
+  span
+    font-size: 26px
+
+.info
+  flex-flow: row nowrap
+  gap: 6px
+
+.points, .method, .percentage
+  background: gray
+  display: flex
+  align-items: center
+  justify-content: center
+  padding: 2px 6px
+  border-radius: 12px
+  min-width: 21px
+  font-size: 14px
+
+.method, .points, .percentage
+  background: hsl(var(--color), 70%, 40%)
+
+.name
+  font-size: 16px

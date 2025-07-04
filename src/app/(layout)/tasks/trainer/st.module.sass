@@ -1,0 +1,41 @@
+.container
+  gap: 16px
+
+  h1, h2
+    font-size: 24px
+    font-weight: 500
+
+  h2
+    margin-bottom: 16px
+
+.header
+  background: #272727
+  border-radius: 12px
+  padding: 16px 24px
+  gap: 4px
+
+  span
+    font-size: 18px
+    color: rgba(255, 255, 255, 0.6)
+
+.columns
+  flex-flow: row nowrap
+  gap: 16px
+  width: 100%
+
+.col
+  width: 50%
+  background: #272727
+  border-radius: 12px
+  padding: 16px 24px
+
+  &:first-child
+    width: 75%
+    min-width: 960px
+  &:last-child
+    width: 25%
+    min-width: 458px
+
+.tasks
+  gap: 12px
+  flex-flow: column-reverse nowrap
