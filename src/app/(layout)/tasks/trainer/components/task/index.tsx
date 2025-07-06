@@ -10,12 +10,14 @@ const Task = ({
   data,
   number,
   onSuccess,
+  isActive,
 }: {
   data: TaskProps;
   number: number;
   onSuccess: (taskId: string, attempts: number) => void;
+  isActive: boolean;
 }) => {
-  const [status, setStatus] = useState<"success" | "incorrect" | null>(null);
+  const [status, setStatus] = useState<"solved" | "incorrect" | null>(null);
   const [attempts, setAttempts] = useState<number>(0);
   const [alreadySolved, setAlreadySolved] = useState<boolean>(false);
   const [answer, setAnswer] = useState<string>("");
@@ -24,10 +26,20 @@ const Task = ({
   const inputRef = useRef<HTMLInputElement>(null);
   useEffect(() => {
     setVisible(true);
-    if (inputRef.current) {
-      inputRef.current.focus();
-    }
   }, []);
+
+  const rootRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (isActive) {
+      if (inputRef.current) {
+        inputRef.current.focus();
+      }
+      if (rootRef.current) {
+        rootRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    }
+  }, [isActive]);
 
   const handleSubmit = async (
     id: string,
@@ -37,7 +49,7 @@ const Task = ({
 
     try {
       const res = await api.post<{
-        status: "success" | "incorrect";
+        status: "solved" | "incorrect";
         attempts: number;
       }>("/tasks/", {
         task: id,
@@ -47,7 +59,7 @@ const Task = ({
       setStatus(res.data.status);
       setAttempts(res.data.attempts);
 
-      if (res.data.status === "success") {
+      if (res.data.status === "solved") {
         onSuccess(id, res.data.attempts);
       }
     } catch (e: any) {
@@ -62,11 +74,12 @@ const Task = ({
 
   return (
     <div
+        ref={rootRef}
       className={`${visible ? st.visible : ""} ${st.task}`}
       style={
         {
           "--color":
-            status == "success"
+            status == "solved"
               ? "157"
               : status == "incorrect"
                 ? "340"
@@ -102,17 +115,17 @@ const Task = ({
         >
           <span>Ответ:</span>
           <div
-            className={`${status == "success" ? st.active : status == "incorrect" ? st.incorrect : ""} ${st.input__container}`}
+            className={`${status == "solved" ? st.active : status == "incorrect" ? st.incorrect : ""} ${st.input__container}`}
           >
             <button
-              disabled={alreadySolved || status == "success"}
+              disabled={alreadySolved || status == "solved"}
               className={`btn secondary ${st.btn}`}
             >
               Ответить
             </button>
             <input
               ref={inputRef}
-              disabled={alreadySolved || status == "success"}
+              disabled={alreadySolved || status == "solved"}
               name="answer"
               value={answer}
               type="text"
@@ -128,13 +141,13 @@ const Task = ({
         </form>
         <div className={st.buttons}>
           <button
-            disabled={alreadySolved || status == "success"}
+            disabled={alreadySolved || status == "solved"}
             className={`btn secondary ${st.btn}`}
           >
             Подсказка
           </button>
           <button
-            disabled={alreadySolved || status == "success"}
+            disabled={alreadySolved || status == "solved"}
             className={`btn primary ${st.btn}`}
           >
             Решение
