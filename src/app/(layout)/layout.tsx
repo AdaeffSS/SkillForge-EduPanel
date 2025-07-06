@@ -12,9 +12,9 @@ export default function ChildrenLayout({
     <>
       <Header />
       <div style={{ display: 'flex', alignItems: 'center', padding: 16 } as React.CSSProperties}>
-          <div style={{ width: '100%' } as React.CSSProperties }>
+          <main style={{ width: '100%' } as React.CSSProperties }>
               {children}
-          </div>
+          </main>
       </div>
       <Footer />
     </>

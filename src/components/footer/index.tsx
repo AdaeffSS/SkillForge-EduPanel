@@ -56,7 +56,7 @@ const Footer = () => {
         {/*<span>Реализуется участником проекта «Сколково»<br/>при грантовой поддержке проекта "Сколково"</span>*/}
         <Link href={"#"}>
           <Image
-            alt={"Участник Сколково"}
+            alt={"Итмо старс"}
             src={"https://stars.itmo.ru/api/files/images/components/library/default/logos/logoWhite.svg"}
             className={st.sk}
             width={600}

@@ -1,0 +1,128 @@
+.task
+  background: #393939
+  border-radius: 12px
+  gap: 12px
+  overflow: hidden
+  opacity: 0
+  translate: 0 -10px
+  transition: opacity .5s, transform .5s, max-height 1s
+  max-height: 0
+  margin: -10px 0 0
+
+  &.visible
+    opacity: 1
+    translate: 0
+    margin: 0
+    max-height: 1000px
+
+.header
+  background: hsl(var(--color), 100%, 10%)
+  flex-flow: row
+  align-items: center
+  justify-content: space-between
+  gap: 32px
+  min-height: 46px
+  border-radius: 12px
+  margin: 10px 10px 0
+  transition: background .75s
+
+  *
+    white-space: nowrap
+
+  .text
+    color: rgba(255, 255, 255, 0.6)
+    font-size: 17px
+
+  .type
+    color: white
+
+.left
+  flex-flow: row nowrap
+  white-space: nowrap
+  height: 100%
+  align-items: center
+  gap: 16px
+
+.number
+  background: hsl(var(--color), 90%, 30%)
+  width: fit-content
+  min-width: 52px
+  display: flex
+  align-items: center
+  justify-content: center
+  font-weight: 600
+  font-size: 24px
+  border-radius: 9px
+  margin: 7px
+  height: calc(100% - 14px)
+  transition: background .75s
+
+.right
+  font-size: 12px
+  color: rgba(255, 255, 255, 0.2)
+  font-weight: 400
+  margin-right: 16px
+
+.content
+  padding: 0 16px
+  font-size: 16px
+
+.buttons
+  flex-flow: row nowrap
+  gap: 8px
+  width: fit-content
+
+.btn
+  padding: 0 32px
+  height: 40px
+  font-size: 14px
+  font-weight: 400
+
+.bottom
+  flex-flow: row nowrap
+  justify-content: space-between
+  padding: 0 16px 12px
+
+.input
+  background: #262626
+  font-size: 18px
+  border-radius: 12px 0 0 12px
+  border: 2px solid #1C1C1C
+  outline: none
+  padding: 0 16px
+  transition: all .1s, border .75s
+
+  &:hover
+    filter: brightness(110%)
+
+  &__container
+    flex-flow: row-reverse nowrap
+    width: min-content
+    outline: 2px solid transparent
+    border-radius: 12px
+    transition: outline .5s
+
+    &.active
+
+      .input
+        border-radius: 12px
+        border: 2px solid rgba(0, 255, 157, 0.25)
+
+      .btn
+        opacity: 0
+        transform: translateX(-10%)
+
+    &.incorrect
+      outline: 2px solid #9a1642
+
+    .btn
+      border-radius: 0 12px 12px 0
+      transition: transform .45s, opacity .45s
+
+      &:hover + .input
+        filter: brightness(110%)
+
+  &__wrapper
+    display: flex
+    align-items: center
+    gap: 12px
