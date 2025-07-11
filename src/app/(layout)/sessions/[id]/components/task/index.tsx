@@ -2,18 +2,20 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import st from "./st.module.sass";
-import { TaskProps } from "@/app/(layout)/tasks/trainer/components/TrainerPageContent";
+import { TaskProps } from "../../pages/trainer";
 import api from "@/assets/lib/api";
 import Markdown from "@/components/markdown";
 
 const Task = ({
   data,
+    sessionId,
   number,
   onSuccess,
   isActive,
 }: {
   data: TaskProps;
   number: number;
+  sessionId: number;
   onSuccess: (taskId: string, attempts: number) => void;
   isActive: boolean;
 }) => {
@@ -53,6 +55,7 @@ const Task = ({
         attempts: number;
       }>("/tasks/", {
         task: id,
+        sessionId,
         answer,
       });
 

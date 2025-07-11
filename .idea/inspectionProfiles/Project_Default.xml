@@ -1,0 +1,10 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="ES6MissingAwait" enabled="true" level="TYPO" enabled_by_default="true" editorAttributes="TYPO" />
+    <inspection_tool class="ES6PossiblyAsyncFunction" enabled="true" level="TYPO" enabled_by_default="true" editorAttributes="TYPO" />
+    <inspection_tool class="ES6RedundantAwait" enabled="true" level="TYPO" enabled_by_default="true" editorAttributes="TYPO" />
+    <inspection_tool class="ES6TopLevelAwaitExpression" enabled="false" level="TYPO" enabled_by_default="false" editorAttributes="TYPO" />
+    <inspection_tool class="JSIgnoredPromiseFromCall" enabled="true" level="TYPO" enabled_by_default="true" editorAttributes="TYPO" />
+  </profile>
+</component>

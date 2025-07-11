@@ -1,6 +1,7 @@
 import st from "./st.module.sass";
 import React from "react";
-import Link from "next/link";
+import api from "@/assets/lib/api";
+import { useRouter } from "next/navigation"
 
 interface TaskCardProps {
     type: string,
@@ -18,10 +19,20 @@ type Props = {
 }
 
 const Component = ({data}: Props) => {
+    const router = useRouter();
+
+    const handleClick = async (data: TaskCardProps) => {
+        const createSession = await api.post('/sessions/create', {
+            type: 'train',
+            code: `${data.exam}.${data.subject}`,
+            task: data.type
+        })
+        router.push(createSession.data)
+    }
+
     return (
-      <Link href={`/tasks/trainer?t=t_1&exam=${data.exam}&sub=${data.subject}`}>
-          {/*<Link href={`/tasks/trainer?t=${data.type}&exam=${data.exam}&sub=${data.subject}`}>*/}
         <div
+            onClick={() => handleClick(data)}
           className={st.task}
           style={{ "--color": data.color } as React.CSSProperties}
         >
@@ -37,7 +48,6 @@ const Component = ({data}: Props) => {
           </div>
           <span className={st.name}>{data.name}</span>
         </div>
-      </Link>
     );
 }
 
