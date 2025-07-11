@@ -1,9 +1,10 @@
 'use client'
+
 import st from './styles.module.sass'
 import Image from 'next/image'
 import Link from "next/link";
-import {GalleryVerticalEnd, House, TableProperties} from "lucide-react";
-import React from "react";
+import {GalleryVerticalEnd, House, Menu, TableProperties, X} from "lucide-react";
+import React, {useEffect} from "react";
 
 const nav = [
     {'label': 'Главная', 'href': '/', icon: <House className={st.icon} />, color: '#FF0099'},
@@ -23,6 +24,9 @@ const user = {
 }
 
 const Header = () => {
+
+    const [mobileNavOpen, setMobileNavOpen] = React.useState(false);
+
     return (
       <header className={st.header}>
         <Link href={"/"} className={st.logo}>
@@ -38,6 +42,7 @@ const Header = () => {
             <span>Панель обучения</span>
           </div>
         </Link>
+
         <nav className={st.nav}>
           <ul className={st.ul}>
             {nav.map((item, i) => (

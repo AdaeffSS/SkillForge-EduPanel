@@ -147,8 +147,8 @@ const Task = ({
             Подсказка
           </button>
           <button
-            disabled={alreadySolved || status == "solved"}
-            className={`btn primary ${st.btn}`}
+              disabled={alreadySolved || status == "solved"}
+              className={`btn primary ${st.btn}`}
           >
             Решение
           </button>

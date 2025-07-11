@@ -1,6 +1,6 @@
 "use client";
 
-import { useSearchParams, notFound } from "next/navigation";
+import {useSearchParams, notFound, useRouter} from "next/navigation";
 import React, { useEffect, useState } from "react";
 import st from "../st.module.sass";
 import Task from "./task";
@@ -38,6 +38,7 @@ const TrainerPageContent = () => {
   if (typeof params.t !== "string") {
     notFound();
   }
+  const router = useRouter();
 
   const [taskCount, setTaskCount] = useState(1);
   const [tasks, setTasks] = useState<TaskProps[]>([]);
@@ -71,6 +72,13 @@ const TrainerPageContent = () => {
       fetchTasks(1).then();
     }
   }, [activeTaskIndex]);
+
+  const handleTest = async () => {
+    const link = await api.post('/sessions/create', {
+      type: 'train'
+    })
+    router.push(link.data);
+  }
 
   return (
     <div className={st.container}>
@@ -121,6 +129,12 @@ const TrainerPageContent = () => {
                 Добавить заданий: {taskCount}
               </button>
             </div>
+            <button
+                className="btn primary"
+                onClick={() => handleTest()}
+            >
+              Сессия
+            </button>
           </div>
         </div>
       </div>
