@@ -1,9 +1,8 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
-import Router from 'next/router';
 
 const api = axios.create({
     baseURL: 'http://localhost:4000/api/v1',
-    withCredentials: true, // чтобы отправлялись cookies
+    withCredentials: true,
 });
 
 let isRefreshing = false;
@@ -34,7 +33,6 @@ api.interceptors.response.use(
         const originalRequest = error.config as AxiosRequestConfig & { _retry?: boolean };
         const status = error.response?.status;
 
-        // 🛑 Если запрос /auth/refresh сам вернул 401 — уводим на /login
         if (
             status === 401 &&
             (originalRequest.url === '/auth/refresh' || originalRequest.url?.includes('/auth/refresh'))
@@ -47,7 +45,6 @@ api.interceptors.response.use(
             return Promise.reject(error);
         }
 
-        // 🔄 Если это обычный 401, пробуем refresh
         if (status === 401 && !originalRequest._retry) {
             console.warn('[axios] 401 detected. Starting refresh flow…');
             originalRequest._retry = true;
@@ -62,7 +59,6 @@ api.interceptors.response.use(
             isRefreshing = true;
 
             try {
-                console.warn('[axios] Sending refresh request…');
                 await api.post('/auth/refresh');
                 processQueue(null);
                 return api(originalRequest);

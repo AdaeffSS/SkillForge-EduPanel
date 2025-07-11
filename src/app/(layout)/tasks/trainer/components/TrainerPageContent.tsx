@@ -129,12 +129,6 @@ const TrainerPageContent = () => {
                 Добавить заданий: {taskCount}
               </button>
             </div>
-            <button
-                className="btn primary"
-                onClick={() => handleTest()}
-            >
-              Сессия
-            </button>
           </div>
         </div>
       </div>
